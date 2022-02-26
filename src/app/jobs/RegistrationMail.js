@@ -4,7 +4,9 @@ export default {
     key: 'RegistrationMail',
     async handle(data) {
 
-        const {user} = data;
+        console.log(data.data);
+
+        const { user } = data.data;
 
         await Mail.sendMail({
             from: 'Queue Test <queue@queuetes.com.br',

@@ -1,10 +1,10 @@
-import Mail from '../lib/Mail'
+import Queue from '../lib/Queue'
 
 export default {
-    async store(req, res){
-        const {name, email, password} = req.body;
+    async store(req, res) {
+        const { name, email, password } = req.body;
 
-        const users = {
+        const user = {
             name,
             email,
             password
@@ -12,6 +12,9 @@ export default {
 
         // Adicionar job Registration na fila
 
-        return res.json(users);
-    }    
+        await Queue.add('RegistrationMail', { user });
+        await Queue.add("UserReport", { user });
+
+        return res.json(user);
+    }
 }
